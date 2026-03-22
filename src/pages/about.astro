@@ -17,7 +17,7 @@ import artistPhoto2 from '../assets/artist-photo-2.jpg';
               <Image
                 src={artistPhoto2}
                 alt="The artist"
-                width={400}
+                width={600}
                 class="flip-card__img"
               />
             </div>
@@ -25,13 +25,14 @@ import artistPhoto2 from '../assets/artist-photo-2.jpg';
               <Image
                 src={artistPhoto}
                 alt="The artist"
-                width={400}
+                width={600}
                 class="flip-card__img"
               />
             </div>
           </div>
         </div>
-        <p class="flip-card__hint">Hover to flip</p>
+        <p class="flip-card__hint flip-card__hint--desktop">Hover to flip</p>
+        <p class="flip-card__hint flip-card__hint--mobile">Tap to flip</p>
       </div>
 
       <div class="about__text">
@@ -103,7 +104,8 @@ import artistPhoto2 from '../assets/artist-photo-2.jpg';
     transform-style: preserve-3d;
   }
 
-  .flip-card:hover .flip-card__inner {
+  .flip-card:hover .flip-card__inner,
+  .flip-card.is-flipped .flip-card__inner {
     transform: rotateY(180deg);
   }
 
@@ -135,6 +137,15 @@ import artistPhoto2 from '../assets/artist-photo-2.jpg';
     font-style: italic;
   }
 
+  .flip-card__hint--mobile {
+    display: none;
+  }
+
+  @media (hover: none) {
+    .flip-card__hint--desktop { display: none; }
+    .flip-card__hint--mobile { display: block; }
+  }
+
   .about__text {
     display: flex;
     flex-direction: column;
@@ -142,7 +153,12 @@ import artistPhoto2 from '../assets/artist-photo-2.jpg';
   }
 
   .about__statement {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .about__text p {
+    font-size: 1rem;
     line-height: 1.7;
   }
 
@@ -173,8 +189,19 @@ import artistPhoto2 from '../assets/artist-photo-2.jpg';
 
     .about__photo-wrap {
       position: static;
-      max-width: 80vw;
+      width: 100%;
+      max-width: 360px;
       margin-inline: auto;
     }
   }
 </style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const card = document.querySelector('.flip-card');
+    if (!card) return;
+    card.addEventListener('click', () => {
+      card.classList.toggle('is-flipped');
+    });
+  });
+</script>

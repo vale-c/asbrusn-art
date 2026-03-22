@@ -1,24 +1,36 @@
 ---
+import { Image } from 'astro:assets';
+import artistPhoto from '../assets/artist-photo-2.jpg';
 ---
 
 <section class="intro">
   <div class="intro__inner container">
-    <div class="intro__deco" aria-hidden="true">
-      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="40" cy="40" r="38" stroke="var(--accent)" stroke-width="1" opacity="0.3"/>
-        <circle cx="40" cy="40" r="24" stroke="var(--accent)" stroke-width="1" opacity="0.2"/>
-        <circle cx="40" cy="40" r="10" fill="var(--accent)" opacity="0.15"/>
-      </svg>
+    <div class="intro__photo-col">
+      <div class="intro__photo-frame">
+        <Image
+          src={artistPhoto}
+          alt="The artist"
+          width={320}
+          class="intro__photo"
+        />
+      </div>
+      <div class="intro__media-pills">
+        <span class="intro__pill">Watercolor</span>
+        <span class="intro__pill">Colored Pencil</span>
+        <span class="intro__pill">Ceramics</span>
+        <span class="intro__pill">Photography</span>
+      </div>
     </div>
 
     <div class="intro__text">
       <span class="intro__label">About me</span>
       <h2 class="intro__heading">
-        Traditional media,<br/><em>imaginative subjects</em>
+        I create with my hands<br/><em>and let the materials lead</em>
       </h2>
       <p class="intro__body">
-        Watercolor, colored pencil, clay. I work with materials that have a mind of their own.
-        The results are illustrations that sit somewhere between fantasy and reality.
+        From detailed colored pencil portraits to hand-built ceramic mugs,
+        my work lives in the space where patience meets play. I'm drawn to
+        fantasy, nature, and the small details that make something feel alive.
       </p>
       <a href="/about" class="intro__link">
         More about me &rarr;
@@ -34,25 +46,51 @@
   }
 
   .intro__inner {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
     align-items: center;
     gap: var(--space-xl);
-    max-width: 800px;
+    max-width: 900px;
   }
 
-  .intro__deco {
-    flex-shrink: 0;
-    width: 80px;
-    animation: spin-slow 40s linear infinite;
+  .intro__photo-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
   }
 
-  .intro__deco svg {
+  .intro__photo-frame {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--divider);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  }
+
+  .intro__photo {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
   }
 
-  @keyframes spin-slow {
-    to { transform: rotate(360deg); }
+  .intro__media-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    max-width: 200px;
+  }
+
+  .intro__pill {
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+    padding: 4px 10px;
+    border-radius: 2rem;
+    border: 1px solid var(--divider);
+    color: var(--text-secondary);
+    white-space: nowrap;
   }
 
   .intro__text {
@@ -102,12 +140,18 @@
   }
 
   @media (max-width: 600px) {
-    .intro__deco {
-      display: none;
+    .intro__inner {
+      grid-template-columns: 1fr;
+      text-align: center;
     }
 
-    .intro__inner {
-      text-align: center;
+    .intro__photo-col {
+      order: -1;
+    }
+
+    .intro__photo-frame {
+      width: 140px;
+      height: 140px;
     }
 
     .intro__text {

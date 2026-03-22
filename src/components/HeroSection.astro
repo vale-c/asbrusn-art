@@ -1,0 +1,307 @@
+---
+import { Image } from 'astro:assets';
+
+// Pull in artwork for the hero collage
+const imageModules = import.meta.glob<{ default: ImageMetadata }>(
+  '../content/artwork/**/*.{jpg,jpeg,png,webp,gif}',
+  { eager: true }
+);
+
+const allImages = Object.values(imageModules).map((m) => m.default);
+// Pick up to 5 images for the hero collage
+const heroImages = allImages.slice(0, Math.min(5, allImages.length));
+---
+
+<section class="hero">
+  {/* Floating artwork collage behind the text */}
+  {heroImages.length > 0 && (
+    <div class="hero__collage" aria-hidden="true">
+      {heroImages.map((img, i) => (
+        <div class={`hero__float hero__float--${i + 1}`}>
+          <Image
+            src={img}
+            alt=""
+            width={280}
+            loading="eager"
+            class="hero__float-img"
+          />
+        </div>
+      ))}
+    </div>
+  )}
+
+  <div class="hero__content">
+    <p class="hero__greeting">Hello, I'm</p>
+    <h1 class="hero__title">
+      Asbrusn<span class="hero__dot">.</span>art
+    </h1>
+    <div class="hero__squiggle" aria-hidden="true">
+      <svg viewBox="0 0 200 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 6c15-8 30 8 45 0s30 8 45 0 30 8 45 0 30 8 45 0" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p class="hero__tagline">
+      Illustrator & dreamer, bringing stories<br/>to life one drawing at a time
+    </p>
+    <div class="hero__actions">
+      <a href="/portfolio" class="hero__cta hero__cta--primary">
+        Explore my work
+        <svg class="hero__arrow" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="/about" class="hero__cta hero__cta--ghost">A bit about me</a>
+    </div>
+  </div>
+
+  <button class="hero__scroll" id="scroll-btn" aria-label="Scroll to featured works">
+    <span class="hero__scroll-text">scroll</span>
+    <span class="hero__scroll-line"></span>
+  </button>
+</section>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    document.getElementById('scroll-btn')?.addEventListener('click', () => {
+      const heroBottom = document.querySelector('.hero')?.getBoundingClientRect().bottom ?? 0;
+      window.scrollBy({ top: heroBottom, behavior: 'smooth' });
+    });
+  });
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100dvh - 4rem);
+    text-align: center;
+    overflow: hidden;
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  /* ── Floating collage ────────────────────── */
+  .hero__collage {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero__float {
+    position: absolute;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(44, 36, 32, 0.1);
+    opacity: 0.18;
+    transition: opacity 0.6s ease;
+  }
+
+  .hero:hover .hero__float {
+    opacity: 0.28;
+  }
+
+  .hero__float-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero__float--1 {
+    width: 180px;
+    top: 8%;
+    left: 5%;
+    transform: rotate(-6deg);
+    animation: float-drift 18s ease-in-out infinite;
+  }
+
+  .hero__float--2 {
+    width: 150px;
+    top: 12%;
+    right: 8%;
+    transform: rotate(4deg);
+    animation: float-drift 22s ease-in-out infinite reverse;
+  }
+
+  .hero__float--3 {
+    width: 130px;
+    bottom: 15%;
+    left: 10%;
+    transform: rotate(3deg);
+    animation: float-drift 20s ease-in-out infinite 2s;
+  }
+
+  .hero__float--4 {
+    width: 160px;
+    bottom: 10%;
+    right: 6%;
+    transform: rotate(-5deg);
+    animation: float-drift 24s ease-in-out infinite 1s;
+  }
+
+  .hero__float--5 {
+    width: 120px;
+    top: 45%;
+    left: 2%;
+    transform: rotate(7deg);
+    animation: float-drift 19s ease-in-out infinite 3s;
+  }
+
+  @keyframes float-drift {
+    0%, 100% { translate: 0 0; }
+    25% { translate: 6px -8px; }
+    50% { translate: -4px 6px; }
+    75% { translate: 8px 4px; }
+  }
+
+  /* ── Content ─────────────────────────────── */
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .hero__greeting {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .hero__title {
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 10vw, 6.5rem);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--text-primary);
+    line-height: 1;
+  }
+
+  .hero__dot {
+    color: var(--accent);
+  }
+
+  .hero__squiggle {
+    width: clamp(120px, 30vw, 200px);
+    margin: var(--space-sm) 0 var(--space-lg);
+    opacity: 0.6;
+  }
+
+  .hero__squiggle svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .hero__tagline {
+    font-size: clamp(0.95rem, 2vw, 1.15rem);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 400px;
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero__actions {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 0.75rem 1.75rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    border-radius: 100px;
+    transition: all var(--transition);
+  }
+
+  .hero__cta--primary {
+    background: var(--text-primary);
+    color: var(--bg);
+  }
+
+  .hero__cta--primary:hover {
+    background: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(184, 149, 106, 0.3);
+  }
+
+  .hero__cta--primary:hover .hero__arrow {
+    translate: 3px 0;
+  }
+
+  .hero__arrow {
+    transition: translate var(--transition);
+  }
+
+  .hero__cta--ghost {
+    border: 1.5px solid var(--divider);
+    color: var(--text-secondary);
+  }
+
+  .hero__cta--ghost:hover {
+    border-color: var(--accent);
+    color: var(--text-primary);
+  }
+
+  /* ── Scroll indicator ────────────────────── */
+  .hero__scroll {
+    position: absolute;
+    bottom: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    cursor: pointer;
+    transition: opacity var(--transition);
+  }
+
+  .hero__scroll:hover {
+    opacity: 0.7;
+  }
+
+  .hero__scroll-text {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    opacity: 0.5;
+  }
+
+  .hero__scroll-line {
+    display: block;
+    width: 1px;
+    height: 36px;
+    background: var(--divider);
+    animation: scroll-hint 2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-hint {
+    0%, 100% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+    30% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+    60% { opacity: 1; transform: scaleY(1); transform-origin: bottom; }
+    90% { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* ── Mobile ──────────────────────────────── */
+  @media (max-width: 768px) {
+    .hero__float--1 { width: 110px; }
+    .hero__float--2 { width: 100px; }
+    .hero__float--3 { width: 90px; }
+    .hero__float--4 { width: 100px; }
+    .hero__float--5 { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .hero__float--3,
+    .hero__float--4 { display: none; }
+  }
+</style>

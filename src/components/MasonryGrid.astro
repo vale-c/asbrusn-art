@@ -1,0 +1,25 @@
+---
+---
+
+<div class="masonry-grid">
+  <slot />
+</div>
+
+<style>
+  .masonry-grid {
+    columns: 3;
+    column-gap: var(--space-md);
+  }
+
+  @media (max-width: 1024px) {
+    .masonry-grid {
+      columns: 2;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .masonry-grid {
+      columns: 1;
+    }
+  }
+</style>

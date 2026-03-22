@@ -1,0 +1,180 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import artistPhoto from '../assets/artist-photo.jpg';
+import artistPhoto2 from '../assets/artist-photo-2.jpg';
+---
+
+<BaseLayout title="About">
+  <section class="about container">
+    <h1 class="about__heading">About me</h1>
+
+    <div class="about__grid">
+      <div class="about__photo-wrap">
+        <div class="flip-card">
+          <div class="flip-card__inner">
+            <div class="flip-card__front">
+              <Image
+                src={artistPhoto}
+                alt="The artist"
+                width={400}
+                class="flip-card__img"
+              />
+            </div>
+            <div class="flip-card__back">
+              <Image
+                src={artistPhoto2}
+                alt="The artist"
+                width={400}
+                class="flip-card__img"
+              />
+            </div>
+          </div>
+        </div>
+        <p class="flip-card__hint">Hover to flip</p>
+      </div>
+
+      <div class="about__text">
+        <p class="about__statement">
+          I'm Greta, a visual artist working across watercolor, colored pencil, and handmade crafts.
+        </p>
+        <p>
+          My practice sits somewhere between illustration and fine art. I'm drawn to
+          fantasy, portraiture, and landscape: subjects that let me play with color,
+          atmosphere, and storytelling. Most of my work is traditional, built on paper
+          with pigment and patience.
+        </p>
+        <p>
+          When I'm not painting, I'm usually shaping something with my hands. Clay,
+          mixed media, small objects that blur the line between art and craft.
+        </p>
+        <h2 class="about__subheading">Media</h2>
+        <ul class="about__skills">
+          <li>Watercolor</li>
+          <li>Colored pencil</li>
+          <li>Portraiture</li>
+          <li>Character design</li>
+          <li>Clay & mixed media</li>
+          <li>Photography</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about {
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-xl);
+  }
+
+  .about__heading {
+    font-size: clamp(2rem, 5vw, 3rem);
+    text-align: center;
+    margin-bottom: var(--space-xl);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+  }
+
+  .about__grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .about__photo-wrap {
+    position: sticky;
+    top: calc(4rem + var(--space-lg));
+  }
+
+  /* ── Flip card ───────────────────────────── */
+  .flip-card {
+    perspective: 800px;
+    border-radius: var(--radius);
+    overflow: visible;
+  }
+
+  .flip-card__inner {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+
+  .flip-card:hover .flip-card__inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card__front,
+  .flip-card__back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .flip-card__back {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .flip-card__hint {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0.5;
+    margin-top: var(--space-sm);
+    font-style: italic;
+  }
+
+  .about__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .about__statement {
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+
+  .about__subheading {
+    font-size: 1.5rem;
+    margin-top: var(--space-lg);
+    font-weight: 400;
+  }
+
+  .about__skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .about__skills li {
+    padding: 0.4rem 1rem;
+    background: var(--surface);
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 768px) {
+    .about__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about__photo-wrap {
+      position: static;
+      max-width: 300px;
+      margin-inline: auto;
+    }
+  }
+</style>

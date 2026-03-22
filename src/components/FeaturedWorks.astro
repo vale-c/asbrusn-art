@@ -1,0 +1,280 @@
+---
+import { Image } from 'astro:assets';
+
+const imageModules = import.meta.glob<{ default: ImageMetadata }>(
+  '../content/artwork/**/*.{jpg,jpeg,png,webp,gif}',
+  { eager: true }
+);
+
+interface FeaturedItem {
+  src: ImageMetadata;
+  title: string;
+  category: string;
+}
+
+const items: FeaturedItem[] = Object.entries(imageModules).map(([path, mod]) => {
+  const parts = path.split('/');
+  const filename = parts.at(-1) || '';
+  const category = parts.at(-2) || '';
+  const title = filename
+    .replace(/\.[^.]+$/, '')
+    .replace(/[-_]/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+  return { src: mod.default, title, category };
+});
+
+// Pick up to 6 featured items, spread across categories
+const byCategory = new Map<string, FeaturedItem[]>();
+items.forEach((item) => {
+  const list = byCategory.get(item.category) || [];
+  list.push(item);
+  byCategory.set(item.category, list);
+});
+
+const featured: FeaturedItem[] = [];
+const maxPer = 3;
+for (const [, list] of byCategory) {
+  featured.push(...list.slice(0, maxPer));
+}
+const displayItems = featured.slice(0, 6);
+const count = displayItems.length;
+---
+
+{displayItems.length > 0 && (
+  <section class="featured">
+    <div class="featured__header container">
+      <span class="featured__label">Selected works</span>
+      <h2 class="featured__heading">A taste of what I create</h2>
+    </div>
+
+    <div class={`featured__grid featured__grid--${count} container`}>
+      {displayItems.map((item, i) => (
+        <a href="/portfolio" class={`featured__item featured__item--${i + 1}`}>
+          <div class="featured__img-wrap">
+            <Image
+              src={item.src}
+              alt={item.title}
+              widths={[400, 800]}
+              sizes="(max-width: 768px) 90vw, 50vw"
+              loading="lazy"
+              class="featured__img"
+            />
+          </div>
+          <div class="featured__meta">
+            <span class="featured__title">{item.title}</span>
+            <span class="featured__cat">{item.category}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="featured__more container">
+      <a href="/portfolio" class="featured__link">
+        See all works
+        <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+)}
+
+<style>
+  .featured {
+    padding: var(--space-2xl) 0;
+  }
+
+  .featured__header {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .featured__label {
+    display: inline-block;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--space-sm);
+  }
+
+  .featured__heading {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--text-primary);
+  }
+
+  /* ── Grid — adapts to item count ─────────── */
+  .featured__grid {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  /* 2 items: side-by-side with staggered heights */
+  .featured__grid--2 {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: auto;
+  }
+
+  .featured__grid--2 .featured__item--1 {
+    aspect-ratio: 3 / 4;
+    margin-top: var(--space-xl);
+  }
+
+  .featured__grid--2 .featured__item--2 {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* 3 items: one large + two stacked */
+  .featured__grid--3 {
+    grid-template-columns: 7fr 5fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .featured__grid--3 .featured__item--1 { grid-row: 1 / 3; }
+  .featured__grid--3 .featured__item--2 { min-height: 200px; }
+  .featured__grid--3 .featured__item--3 { min-height: 200px; }
+
+  /* 4+ items: asymmetric editorial */
+  .featured__grid--4,
+  .featured__grid--5,
+  .featured__grid--6 {
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(140px, auto);
+  }
+
+  .featured__grid--4 .featured__item--1,
+  .featured__grid--5 .featured__item--1,
+  .featured__grid--6 .featured__item--1 { grid-column: 1 / 8; grid-row: span 2; }
+
+  .featured__grid--4 .featured__item--2,
+  .featured__grid--5 .featured__item--2,
+  .featured__grid--6 .featured__item--2 { grid-column: 8 / 13; }
+
+  .featured__grid--4 .featured__item--3,
+  .featured__grid--5 .featured__item--3,
+  .featured__grid--6 .featured__item--3 { grid-column: 8 / 13; }
+
+  .featured__grid--4 .featured__item--4 { grid-column: 1 / 13; min-height: 260px; }
+
+  .featured__grid--5 .featured__item--4 { grid-column: 1 / 7; grid-row: span 2; }
+  .featured__grid--5 .featured__item--5 { grid-column: 7 / 13; grid-row: span 2; }
+
+  .featured__grid--6 .featured__item--4 { grid-column: 1 / 5; grid-row: span 2; }
+  .featured__grid--6 .featured__item--5 { grid-column: 5 / 9; grid-row: span 2; }
+  .featured__grid--6 .featured__item--6 { grid-column: 9 / 13; grid-row: span 2; }
+
+  /* ── Item shared styles ──────────────────── */
+  .featured__item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .featured__img-wrap {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .featured__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .featured__item:hover .featured__img {
+    transform: scale(1.04);
+  }
+
+  .featured__meta {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: var(--space-lg) var(--space-md) var(--space-md);
+    background: linear-gradient(transparent, rgba(44, 36, 32, 0.65));
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .featured__item:hover .featured__meta {
+    opacity: 1;
+  }
+
+  .featured__title {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    color: var(--bg);
+  }
+
+  .featured__cat {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(250, 247, 242, 0.7);
+  }
+
+  /* ── "See all" link ──────────────────────── */
+  .featured__more {
+    text-align: center;
+    margin-top: var(--space-xl);
+  }
+
+  .featured__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    transition: color var(--transition);
+  }
+
+  .featured__link:hover {
+    color: var(--accent);
+  }
+
+  .featured__link svg {
+    transition: translate var(--transition);
+  }
+
+  .featured__link:hover svg {
+    translate: 4px 0;
+  }
+
+  /* ── Mobile ──────────────────────────────── */
+  @media (max-width: 768px) {
+    .featured__grid--2 .featured__item--1 {
+      margin-top: 0;
+    }
+
+    .featured__grid--2,
+    .featured__grid--3,
+    .featured__grid--4,
+    .featured__grid--5,
+    .featured__grid--6 {
+      grid-template-columns: 1fr;
+      grid-auto-rows: auto;
+    }
+
+    .featured__grid--3 .featured__item--1 { grid-row: span 1; }
+
+    .featured__item {
+      grid-column: auto !important;
+      grid-row: auto !important;
+      aspect-ratio: 4 / 3;
+    }
+
+    .featured__meta {
+      opacity: 1;
+    }
+  }
+</style>

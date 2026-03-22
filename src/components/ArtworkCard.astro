@@ -1,0 +1,97 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  src: ImageMetadata;
+  title: string;
+  category: string;
+  index: number;
+  materials?: string;
+  theme?: string;
+  year?: string;
+  description?: string;
+}
+
+const { src, title, category, index, materials, theme, year, description } = Astro.props;
+---
+
+<figure
+  class="artwork-card"
+  data-category={category}
+  role="button"
+  tabindex="0"
+  aria-label={`View ${title}`}
+  data-index={index}
+  data-title={title}
+  data-materials={materials || ''}
+  data-theme={theme || ''}
+  data-year={year || ''}
+  data-description={description || ''}
+>
+  <Image
+    src={src}
+    alt={title}
+    widths={[400, 800]}
+    sizes="(max-width: 768px) 50vw, 33vw"
+    loading={index < 6 ? 'eager' : 'lazy'}
+    class="artwork-card__image"
+  />
+  <figcaption class="artwork-card__overlay">
+    <span class="artwork-card__title">{title}</span>
+    {materials && <span class="artwork-card__materials">{materials}</span>}
+  </figcaption>
+</figure>
+
+<style>
+  .artwork-card {
+    break-inside: avoid;
+    margin-bottom: var(--space-md);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .artwork-card__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform var(--transition);
+  }
+
+  .artwork-card:hover .artwork-card__image,
+  .artwork-card:focus-visible .artwork-card__image {
+    transform: scale(1.02);
+  }
+
+  .artwork-card__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: var(--space-lg) var(--space-md) var(--space-md);
+    background: linear-gradient(transparent, rgba(44, 36, 32, 0.75));
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+
+  .artwork-card:hover .artwork-card__overlay,
+  .artwork-card:focus-visible .artwork-card__overlay {
+    opacity: 1;
+  }
+
+  .artwork-card__title {
+    color: var(--bg);
+    font-family: var(--font-heading);
+    font-size: 1rem;
+  }
+
+  .artwork-card__materials {
+    color: rgba(250, 247, 242, 0.65);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+  }
+</style>

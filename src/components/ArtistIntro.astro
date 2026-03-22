@@ -1,0 +1,117 @@
+---
+---
+
+<section class="intro">
+  <div class="intro__inner container">
+    <div class="intro__deco" aria-hidden="true">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="38" stroke="var(--accent)" stroke-width="1" opacity="0.3"/>
+        <circle cx="40" cy="40" r="24" stroke="var(--accent)" stroke-width="1" opacity="0.2"/>
+        <circle cx="40" cy="40" r="10" fill="var(--accent)" opacity="0.15"/>
+      </svg>
+    </div>
+
+    <div class="intro__text">
+      <span class="intro__label">About me</span>
+      <h2 class="intro__heading">
+        Traditional media,<br/><em>imaginative subjects</em>
+      </h2>
+      <p class="intro__body">
+        Watercolor, colored pencil, clay. I work with materials that have a mind of their own.
+        The results are illustrations that sit somewhere between fantasy and reality.
+      </p>
+      <a href="/about" class="intro__link">
+        More about me &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .intro {
+    padding: var(--space-2xl) 0;
+    border-top: 1px solid var(--divider);
+  }
+
+  .intro__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+    max-width: 800px;
+  }
+
+  .intro__deco {
+    flex-shrink: 0;
+    width: 80px;
+    animation: spin-slow 40s linear infinite;
+  }
+
+  .intro__deco svg {
+    width: 100%;
+    height: auto;
+  }
+
+  @keyframes spin-slow {
+    to { transform: rotate(360deg); }
+  }
+
+  .intro__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .intro__label {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .intro__heading {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--text-primary);
+  }
+
+  .intro__heading em {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .intro__body {
+    color: var(--text-secondary);
+    line-height: 1.75;
+    max-width: 550px;
+    margin-top: var(--space-xs);
+  }
+
+  .intro__link {
+    display: inline-block;
+    margin-top: var(--space-md);
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    transition: color var(--transition);
+  }
+
+  .intro__link:hover {
+    color: var(--accent);
+  }
+
+  @media (max-width: 600px) {
+    .intro__deco {
+      display: none;
+    }
+
+    .intro__inner {
+      text-align: center;
+    }
+
+    .intro__text {
+      align-items: center;
+    }
+  }
+</style>

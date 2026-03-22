@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FilterTabs from '../components/FilterTabs.astro';
+import MasonryGrid from '../components/MasonryGrid.astro';
+import ArtworkCard from '../components/ArtworkCard.astro';
+import Lightbox from '../components/Lightbox.astro';
+
+// Auto-discover all artwork images from category folders
+const imageModules = import.meta.glob<{ default: ImageMetadata }>(
+  '../content/artwork/**/*.{jpg,jpeg,png,webp,gif}',
+  { eager: true }
+);
+
+// Auto-discover optional metadata files
+const metadataModules = import.meta.glob<{ default: ArtworkMeta[] }>(
+  '../content/artwork/**/artwork.json',
+  { eager: true }
+);
+
+interface ArtworkMeta {
+  file: string;
+  title?: string;
+  materials?: string;
+  theme?: string;
+  year?: string;
+  description?: string;
+}
+
+// Build a lookup: "category/filename" → metadata
+const metadataLookup = new Map<string, ArtworkMeta>();
+for (const [path, mod] of Object.entries(metadataModules)) {
+  const parts = path.split('/');
+  const category = parts.at(-2) || '';
+  for (const entry of mod.default) {
+    metadataLookup.set(`${category}/${entry.file}`, entry);
+  }
+}
+
+// Parse images into structured data
+interface Artwork {
+  src: ImageMetadata;
+  title: string;
+  category: string;
+  materials?: string;
+  theme?: string;
+  year?: string;
+  description?: string;
+}
+
+const artworks: Artwork[] = Object.entries(imageModules).map(([path, mod]) => {
+  const parts = path.split('/');
+  const filename = parts.at(-1) || '';
+  const category = parts.at(-2) || 'uncategorized';
+
+  // Check for metadata
+  const meta = metadataLookup.get(`${category}/${filename}`);
+
+  // Clean filename into a readable title as fallback
+  const fallbackTitle = filename
+    .replace(/\.[^.]+$/, '')
+    .replace(/[-_]/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+
+  return {
+    src: mod.default,
+    title: meta?.title || fallbackTitle,
+    category,
+    materials: meta?.materials,
+    theme: meta?.theme,
+    year: meta?.year,
+    description: meta?.description,
+  };
+});
+
+// Extract unique categories
+const categories = [...new Set(artworks.map((a) => a.category))].sort();
+---
+
+<BaseLayout title="Portfolio">
+  <section class="portfolio container">
+    <h1 class="portfolio__heading">Portfolio</h1>
+
+    {categories.length > 1 && <FilterTabs categories={categories} />}
+
+    {artworks.length > 0 ? (
+      <MasonryGrid>
+        {artworks.map((artwork, i) => (
+          <ArtworkCard
+            src={artwork.src}
+            title={artwork.title}
+            category={artwork.category}
+            materials={artwork.materials}
+            theme={artwork.theme}
+            year={artwork.year}
+            description={artwork.description}
+            index={i}
+          />
+        ))}
+      </MasonryGrid>
+    ) : (
+      <p class="portfolio__empty">
+        No artwork yet. Drop images into <code>src/content/artwork/</code> folders to get started.
+      </p>
+    )}
+
+    <Lightbox />
+  </section>
+</BaseLayout>
+
+<style>
+  .portfolio {
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-xl);
+  }
+
+  .portfolio__heading {
+    font-size: clamp(2rem, 5vw, 3rem);
+    text-align: center;
+    margin-bottom: var(--space-xl);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+  }
+
+  .portfolio__empty {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: var(--space-2xl) 0;
+  }
+
+  .portfolio__empty code {
+    background: var(--surface);
+    padding: 0.15em 0.4em;
+    border-radius: var(--radius);
+    font-size: 0.9em;
+  }
+</style>

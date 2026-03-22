@@ -1,0 +1,74 @@
+---
+interface Props {
+  categories: string[];
+}
+
+const { categories } = Astro.props;
+---
+
+<div class="filter-tabs" role="tablist" aria-label="Filter artwork by category">
+  <button class="filter-tab active" role="tab" aria-selected="true" data-category="all">
+    All
+  </button>
+  {categories.map((cat) => (
+    <button class="filter-tab" role="tab" aria-selected="false" data-category={cat}>
+      {cat.replace(/-/g, ' ').replace(/\band\b/g, '&').replace(/\b\w/g, (c) => c.toUpperCase())}
+    </button>
+  ))}
+</div>
+
+<style>
+  .filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    justify-content: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .filter-tab {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    border-bottom: 1.5px solid transparent;
+    transition: var(--transition);
+  }
+
+  .filter-tab:hover {
+    color: var(--text-primary);
+  }
+
+  .filter-tab.active {
+    color: var(--text-primary);
+    border-bottom-color: var(--accent);
+  }
+</style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const tabs = document.querySelectorAll<HTMLButtonElement>('.filter-tab');
+    const cards = document.querySelectorAll<HTMLElement>('.artwork-card');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+
+        const category = tab.dataset.category;
+
+        cards.forEach((card) => {
+          if (category === 'all' || card.dataset.category === category) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>

@@ -1,0 +1,66 @@
+[
+  {
+    "file": "rainbow-forest.jpg",
+    "title": "Rainbow Forest",
+    "materials": "Watercolor on cold-pressed paper",
+    "theme": "Nature, Fantasy",
+    "year": "2024",
+    "description": "A vibrant woodland scene where color takes on a life of its own, light filtering through trees in every hue."
+  },
+  {
+    "file": "sunset-sky.jpg",
+    "title": "Sunset Sky",
+    "materials": "Watercolor on paper",
+    "theme": "Landscape",
+    "year": "2024",
+    "description": "Purple and golden clouds rolling over a forest silhouette at dusk."
+  },
+  {
+    "file": "masquerade.jpg",
+    "title": "Masquerade",
+    "materials": "Colored pencil on paper",
+    "theme": "Portrait, Fantasy",
+    "year": "2023",
+    "description": "A mysterious figure in lace gloves holds an ornate Venetian cat mask."
+  },
+  {
+    "file": "flowers-and-butterflies.jpg",
+    "title": "Flowers & Butterflies",
+    "materials": "Colored pencil on paper",
+    "theme": "Portrait, Nature",
+    "year": "2023",
+    "description": "A profile portrait with windswept red hair, adorned with purple flowers and a butterfly."
+  },
+  {
+    "file": "fairy-with-cat.jpg",
+    "title": "Fairy with Cat",
+    "materials": "Colored pencil on paper",
+    "theme": "Fantasy",
+    "year": "2022",
+    "description": "A winged fairy in a laced corset gently cradles a sleeping cat."
+  },
+  {
+    "file": "elf-portrait.jpg",
+    "title": "Ester the Elf",
+    "materials": "Colored pencil on paper",
+    "theme": "Fantasy, Portrait",
+    "year": "2012",
+    "description": "A red-haired elf with a pentacle necklace and a knowing gaze."
+  },
+  {
+    "file": "archer-girl.jpg",
+    "title": "The Archer",
+    "materials": "Colored pencil on paper",
+    "theme": "Fantasy",
+    "year": "2012",
+    "description": "A freckled archer with a quiver of arrows against a golden, swirling backdrop."
+  },
+  {
+    "file": "victorian-lady.jpg",
+    "title": "Victorian Lady",
+    "materials": "Colored pencil on paper",
+    "theme": "Portrait, Historical",
+    "year": "2012",
+    "description": "A curly-haired lady in a pink bonnet and lace, with striking red lips and amber eyes."
+  }
+]

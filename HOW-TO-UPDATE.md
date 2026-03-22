@@ -1,162 +1,153 @@
 # How to Update Your Website
 
-Hi! This guide explains how to add new artwork, edit info, and keep your site up to date. You don't need to know how to code — just follow these steps.
+> **TL;DR** Drop images into folders, commit, push. Done. Site updates in 2 minutes.
 
 ---
 
-## What You Need
+## The 3-Step Loop (this is all you really need)
 
-- **GitHub Desktop** (free app) — [download here](https://desktop.github.com/)
-- A file explorer (Finder on Mac, File Explorer on Windows)
-- Your artwork images (`.jpg`, `.jpeg`, `.png`, or `.webp`)
+**Every time you want to add new artwork, it's the same 3 steps:**
+
+1. **Drop** your image into the right folder
+2. **Commit** in GitHub Desktop (write anything in the summary, e.g. "new art")
+3. **Push** (click "Push origin")
+
+That's it. The site rebuilds automatically. Go make tea, come back, it's live.
 
 ---
 
-## Adding New Artwork
+## Where to Drop Images
 
-### Step 1: Find the artwork folder
-
-Open the project folder on your computer and navigate to:
+Open the project folder and go to:
 
 ```
 src/content/artwork/
 ```
 
-Inside you'll see category folders:
+Pick the right subfolder:
 
-```
-artwork/
-├── drawings-and-paintings/  ← pencil, watercolor, digital art
-├── crafts/        ← clay, handmade, physical pieces
-└── photos/        ← photography
-```
+| Folder | What goes in it |
+|--------|-----------------|
+| `drawings-and-paintings/` | Watercolor, colored pencil, digital art |
+| `crafts/` | Clay, handmade, physical pieces |
+| `photos/` | Photography |
 
-### Step 2: Drop your image in
+**Just drag and drop.** That's literally it.
 
-Drag your image file into the right category folder. For example:
+### Naming your file
 
-- A new watercolor painting → drop it into `drawings-and-paintings/`
-- A photo of a clay sculpture → drop it into `crafts/`
-- A photograph you took → drop it into `photos/`
+Use **lowercase** and **dashes** instead of spaces:
 
-**Naming tips:**
+> `sunset-over-sea.jpg` (not `Sunset Over Sea.jpg`)
 
-- Use lowercase with dashes: `sunset-over-sea.jpg` (not `Sunset Over Sea.jpg`)
-- The filename becomes the title on the site: `sunset-over-sea.jpg` → "Sunset Over Sea"
-- Avoid spaces and special characters in filenames
+The filename becomes the title on the site automatically.
 
-### Step 3: (Optional) Add details about the piece
+---
 
-When someone clicks on an artwork, a detail view opens showing the image alongside a caption with all the info you provide. To add this info, edit the `artwork.json` file inside the category folder. If one doesn't exist yet, create it.
+## (Optional) Adding Details to a Piece
 
-Example `artwork.json`:
+This step is **totally optional**. Skip it if you just want the image to show up.
+
+If you want a piece to have a title, description, materials, etc., edit the `artwork.json` file inside the category folder.
+
+Here's a copy-paste template. Just change the values:
 
 ```json
 [
   {
-    "file": "sunset-over-sea.jpg",
-    "title": "Sunset Over the Sea",
-    "materials": "Watercolor on cold-pressed paper",
-    "theme": "Landscape, Nature",
+    "file": "your-image-filename.jpg",
+    "title": "Your Title Here",
+    "materials": "Watercolor on paper",
+    "theme": "Fantasy, Portrait",
     "year": "2025",
-    "description": "A warm sunset reflected on calm waters."
+    "description": "A short sentence about the piece."
   }
 ]
 ```
 
-Here's what each field does:
+**What each field does:**
 
-| Field           | What it shows                                                         | Required? |
-| --------------- | --------------------------------------------------------------------- | --------- |
-| `"file"`        | Must match the image filename exactly                                 | Yes       |
-| `"title"`       | The artwork name (shown as the heading in the detail view)            | No\*      |
-| `"materials"`   | Media/tools used, e.g. "Colored pencil on paper" (shown with icon)    | No        |
-| `"theme"`       | Comma-separated tags, e.g. "Fantasy, Portrait" (shown as pill badges) | No        |
-| `"year"`        | Year created (shown next to the title)                                | No        |
-| `"description"` | A short caption about the piece (shown as body text)                  | No        |
+| Field | Where it shows up | Required? |
+|-------|-------------------|-----------|
+| `"file"` | Connects the info to the image. **Must match the filename exactly.** | YES |
+| `"title"` | Big heading in the detail view | no |
+| `"materials"` | Small text with palette icon | no |
+| `"theme"` | Colorful tag pills (separate with commas) | no |
+| `"year"` | Next to the title | no |
+| `"description"` | Body text below the title | no |
 
-\*If no title is provided, the filename is used (e.g. `sunset-over-sea.jpg` → "Sunset Over Sea")
+**Adding a second piece?** Put a comma between entries:
 
-**Important:**
+```json
+[
+  {
+    "file": "first-piece.jpg",
+    "title": "First Piece"
+  },
+  {
+    "file": "second-piece.jpg",
+    "title": "Second Piece"
+  }
+]
+```
 
-- The `"file"` must match your image filename exactly (including `.jpg` / `.png` etc.)
-- All fields except `"file"` are optional — skip any you don't need
-- Make sure to put a comma between entries (but NOT after the last one)
-- `"theme"` supports multiple values separated by commas — each one becomes its own tag
-- If you don't create an `artwork.json` at all, the site still works — it just uses the filename as the title and the detail view won't show extra info
+> **No comma after the last entry!** That's the #1 thing that breaks it.
 
-### Step 4: Publish your changes
+---
+
+## Publishing (GitHub Desktop)
+
+Every time, same steps:
 
 1. Open **GitHub Desktop**
-2. You'll see your new files listed as changes
-3. Type a short message in the "Summary" box (e.g., "Added new watercolor")
-4. Click **"Commit to main"**
-5. Click **"Push origin"**
-6. Wait ~2 minutes — the site rebuilds automatically!
+2. Your changes appear on the left
+3. Bottom-left: type *anything* in the Summary box (e.g. "added new painting")
+4. Click **Commit to main**
+5. Click **Push origin** (top bar)
+6. Wait ~2 minutes. Check your site. Done.
 
 ---
 
-## Creating a New Category
+## Other Things You Can Do
 
-Just create a new folder inside `src/content/artwork/`. For example:
+### Add a new category
+Create a new folder in `src/content/artwork/`. For example: `src/content/artwork/digital/`. A new filter tab appears on the site automatically.
 
-```
-src/content/artwork/digital/
-```
+### Remove artwork
+Delete the image file. If it has an entry in `artwork.json`, delete that entry too.
 
-Drop images in, and a new filter tab ("Digital") will appear on the portfolio page automatically. No code changes needed.
+### Change the About page photo
+Replace `src/assets/artist-photo.jpg` with your new photo. Keep the same filename. (The flip card back image is `src/assets/artist-photo-2.jpg`.)
 
----
-
-## Removing Artwork
-
-Simply delete the image file from its folder. If there's an entry for it in `artwork.json`, remove that entry too.
-
----
-
-## Editing the About Page Text
-
-Open `src/pages/about.astro` in any text editor. Look for the text between `<p>` tags and change it. Don't touch anything else in the file.
-
----
-
-## Changing the About Page Photo
-
-Replace the file at `src/assets/artist-photo.jpg` with your new photo (keep the same filename).
-
-For the flip card back image, replace `src/assets/artist-photo-2.jpg`.
+### Edit the About page text
+Open `src/pages/about.astro` in any text editor. Change the text between `<p>` and `</p>` tags. Don't touch anything else.
 
 ---
 
 ## Quick Reference
 
-| I want to...          | Do this                                              |
-| --------------------- | ---------------------------------------------------- |
-| Add artwork           | Drop image in `src/content/artwork/<category>/`      |
-| Add artwork details   | Edit or create `artwork.json` in the category folder |
-| Create a new category | Create a new folder in `src/content/artwork/`        |
-| Remove artwork        | Delete the image file (and its `artwork.json` entry) |
-| Change about photo    | Replace `src/assets/artist-photo.jpg`                |
-| Publish changes       | Commit & push in GitHub Desktop                      |
+| I want to... | Do this |
+|---|---|
+| Add artwork | Drop image into the right folder in `src/content/artwork/` |
+| Add details to a piece | Edit `artwork.json` in that folder |
+| New category | New folder in `src/content/artwork/` |
+| Remove artwork | Delete the image (and its `artwork.json` entry if any) |
+| Change about photo | Replace `src/assets/artist-photo.jpg` |
+| Publish anything | Commit + Push in GitHub Desktop |
 
 ---
 
-## Troubleshooting
+## Something Broke?
 
-**"My new artwork isn't showing"**
+**Site didn't update?**
+- Did you **push**? Committing is not enough. You also need to click "Push origin."
+- Wait 2-3 minutes. It's not instant.
 
-- Make sure you pushed the changes (not just committed)
-- Wait 2-3 minutes for the site to rebuild
-- Check that the image is in the right folder and has a supported extension (`.jpg`, `.png`, `.webp`)
+**artwork.json not working?**
+- Check for missing or extra commas
+- All text must be in `"double quotes"` (not single quotes)
+- The `"file"` name must match your image **exactly**, including `.jpg`
+- Paste your JSON into [jsonlint.com](https://jsonlint.com) to find errors
 
-**"The artwork.json isn't working"**
-
-- Make sure it's valid JSON (no trailing commas, all quotes are `"double quotes"`)
-- The `"file"` field must match the image filename exactly, including the extension
-- You can validate your JSON at [jsonlint.com](https://jsonlint.com)
-
-**"I see an error on the site"**
-
-- Don't panic! Check the Actions tab on GitHub — it will show what went wrong
-- Usually it's a typo in `artwork.json`
-- If stuck, ask Valentina for help :)
+**Totally stuck?**
+- Don't worry about it. Message Valentina.

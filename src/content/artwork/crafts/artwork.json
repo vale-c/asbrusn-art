@@ -1,0 +1,66 @@
+[
+  {
+    "file": "photo_1_2026-03-22_17-04-13.jpg",
+    "title": "The Little Warrior",
+    "materials": "Air-dry clay, acrylic paint",
+    "theme": "Fantasy, Character",
+    "year": "2026",
+    "description": "A tiny adventurer in a striped tunic stands guard beside his campfire, sword drawn and staff in hand. Hand-sculpted and painted with fine detail."
+  },
+  {
+    "file": "photo_2_2026-03-22_17-04-13.jpg",
+    "title": "Mushroom Friends",
+    "materials": "Air-dry clay, acrylic paint",
+    "theme": "Fantasy, Nature",
+    "year": "2026",
+    "description": "A pair of whimsical mushroom characters with delicate painted faces. One wears a golden cap, the other a classic red-and-white polka-dot toadstool hat."
+  },
+  {
+    "file": "photo_3_2026-03-22_17-04-13.jpg",
+    "title": "Sunset Bowl",
+    "materials": "Ceramic, glaze",
+    "theme": "Functional, Abstract",
+    "year": "2026",
+    "description": "A small hand-shaped ceramic bowl with an organic wavy rim, glazed in bold stripes of pink, amber, and deep green."
+  },
+  {
+    "file": "photo_4_2026-03-22_17-04-13.jpg",
+    "title": "Botanical Coil Cup",
+    "materials": "Ceramic, glaze",
+    "theme": "Functional, Botanical",
+    "year": "2026",
+    "description": "A coil-built ceramic cup with a playful curled handle, adorned with hand-painted leaf sprigs and a vine-patterned rim."
+  },
+  {
+    "file": "photo_5_2026-03-22_17-04-13.jpg",
+    "title": "Rose Bud Mug",
+    "materials": "Ceramic, glaze",
+    "theme": "Functional, Botanical",
+    "year": "2026",
+    "description": "A warm-toned ceramic mug decorated with delicate painted leaves and wildflowers, finished with a tiny sculpted rose bud perched on the handle."
+  },
+  {
+    "file": "photo_6_2026-03-22_17-04-13.jpg",
+    "title": "Little Stegosaurus",
+    "materials": "Air-dry clay, acrylic paint",
+    "theme": "Character, Cute",
+    "year": "2026",
+    "description": "A palm-sized green stegosaurus with a cheeky pink smile and a row of tiny back plates. Hand-sculpted and painted in soft green tones."
+  },
+  {
+    "file": "photo_7_2026-03-22_17-04-13.jpg",
+    "title": "WALL-E & Plant",
+    "materials": "Acrylic paint on stone",
+    "theme": "Fan Art, Character",
+    "year": "2026",
+    "description": "The lovable robot WALL-E painted on a smooth river stone, holding his precious plant in a boot. Big blue binocular eyes full of curiosity."
+  },
+  {
+    "file": "photo_8_2026-03-22_17-04-13.jpg",
+    "title": "WALL-E Portrait",
+    "materials": "Acrylic paint on stone",
+    "theme": "Fan Art, Character",
+    "year": "2026",
+    "description": "A close-up portrait of WALL-E painted on stone, capturing his expressive mechanical eyes and gentle personality in careful brushwork."
+  }
+]

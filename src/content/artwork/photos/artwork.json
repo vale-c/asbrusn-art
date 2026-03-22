@@ -1,0 +1,74 @@
+[
+  {
+    "file": "waterfall-ivy-vines.jpg",
+    "title": "Hidden Cascade",
+    "materials": "Digital photography",
+    "theme": "Nature, Water",
+    "year": "2026",
+    "description": "A gentle waterfall veiled behind trailing ivy and wild vines, nature reclaiming its own quiet corner."
+  },
+  {
+    "file": "rooftop-chairs-brutalist.jpg",
+    "title": "Concrete Solitude",
+    "materials": "Digital photography",
+    "theme": "Urban, Architecture",
+    "year": "2026",
+    "description": "Empty chairs on a rooftop terrace framed by raw brutalist geometry, a pause between city and sky."
+  },
+  {
+    "file": "water-reflection-building.jpg",
+    "title": "Mirrored Facade",
+    "materials": "Digital photography",
+    "theme": "Abstract, Urban",
+    "year": "2026",
+    "description": "A building dissolves into its own reflection on still water, blurring the line between solid and liquid."
+  },
+  {
+    "file": "uv-art-exhibition.jpg",
+    "title": "Ultraviolet Gallery",
+    "materials": "Digital photography",
+    "theme": "Art, Exhibition",
+    "year": "2026",
+    "description": "Mannequin figures bathed in UV light at an immersive art exhibition, glowing against the darkness."
+  },
+  {
+    "file": "blue-hanging-installation.jpg",
+    "title": "Suspended in Blue",
+    "materials": "Digital photography",
+    "theme": "Art, Installation",
+    "year": "2026",
+    "description": "Delicate blue forms hang suspended in space, illuminated by scattered points of light like a frozen constellation."
+  },
+  {
+    "file": "blue-wildflowers-garden.jpg",
+    "title": "Garden Blues",
+    "materials": "Digital photography",
+    "theme": "Nature, Botanical",
+    "year": "2026",
+    "description": "Vivid blue wildflowers reaching upward in a lush garden, tiny petals catching the soft light."
+  },
+  {
+    "file": "piano-purple-light.jpg",
+    "title": "Purple Sonata",
+    "materials": "Digital photography",
+    "theme": "Art, Exhibition",
+    "year": "2026",
+    "description": "An ornate antique piano stands dramatic against a sweeping purple projection, where classical craft meets digital art."
+  },
+  {
+    "file": "eiffel-tower-peephole.jpg",
+    "title": "Paris Through the Keyhole",
+    "materials": "Digital photography",
+    "theme": "Travel, Paris",
+    "year": "2026",
+    "description": "The Eiffel Tower perfectly framed through a circular opening in a dark wall, a secret glimpse of the city."
+  },
+  {
+    "file": "eiffel-tower-window-view.jpg",
+    "title": "Window on Paris",
+    "materials": "Digital photography",
+    "theme": "Travel, Paris",
+    "year": "2026",
+    "description": "The Eiffel Tower and the Luxor Obelisk seen through a grand window with golden frame and linen curtains."
+  }
+]

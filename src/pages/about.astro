@@ -5,7 +5,7 @@ import artistPhoto from '../assets/artist-photo.jpg';
 import artistPhoto2 from '../assets/artist-photo-2.jpg';
 ---
 
-<BaseLayout title="About" description="Meet Greta, the visual artist behind Asbrusn.art. Working across watercolor, colored pencil, clay, and photography.">
+<BaseLayout title="About">
   <section class="about container">
     <h1 class="about__heading">About me</h1>
 
@@ -15,24 +15,23 @@ import artistPhoto2 from '../assets/artist-photo-2.jpg';
           <div class="flip-card__inner">
             <div class="flip-card__front">
               <Image
-                src={artistPhoto2}
+                src={artistPhoto}
                 alt="The artist"
-                width={600}
+                width={400}
                 class="flip-card__img"
               />
             </div>
             <div class="flip-card__back">
               <Image
-                src={artistPhoto}
+                src={artistPhoto2}
                 alt="The artist"
-                width={600}
+                width={400}
                 class="flip-card__img"
               />
             </div>
           </div>
         </div>
-        <p class="flip-card__hint flip-card__hint--desktop">Hover to flip</p>
-        <p class="flip-card__hint flip-card__hint--mobile">Tap to flip</p>
+        <p class="flip-card__hint">Hover to flip</p>
       </div>
 
       <div class="about__text">
@@ -40,11 +39,10 @@ import artistPhoto2 from '../assets/artist-photo-2.jpg';
           I'm Greta, a visual artist working across watercolor, colored pencil, and handmade crafts.
         </p>
         <p>
-          My practice sits somewhere between illustration and fine art. I'm drawn to
-          fantasy, portraiture, and landscape: subjects that let me play with color,
-          atmosphere, and storytelling. Most of my work is traditional, built on paper
-          with pigment and patience.
-        </p>
+          My work sits somewhere between illustration and fine art. I'm drawn to
+          fantasy, portraiture, and landscape: subjects that make my imagination come alive and bring you to my fantasy world. 
+          Every character comes to life after a story popped up in my mind, and it is not only a frame, but the present of a past or an alternative reality. So for me showing you my worls means also host you into my inner vulnerable world built on darkness and light. My medium is mostly paper and canvas, but I am experimenting also clay, trimming, photography and upcycling.
+         </p>
         <p>
           When I'm not painting, I'm usually shaping something with my hands. Clay,
           mixed media, small objects that blur the line between art and craft.
@@ -104,8 +102,7 @@ import artistPhoto2 from '../assets/artist-photo-2.jpg';
     transform-style: preserve-3d;
   }
 
-  .flip-card:hover .flip-card__inner,
-  .flip-card.is-flipped .flip-card__inner {
+  .flip-card:hover .flip-card__inner {
     transform: rotateY(180deg);
   }
 
@@ -137,15 +134,6 @@ import artistPhoto2 from '../assets/artist-photo-2.jpg';
     font-style: italic;
   }
 
-  .flip-card__hint--mobile {
-    display: none;
-  }
-
-  @media (hover: none) {
-    .flip-card__hint--desktop { display: none; }
-    .flip-card__hint--mobile { display: block; }
-  }
-
   .about__text {
     display: flex;
     flex-direction: column;
@@ -153,12 +141,7 @@ import artistPhoto2 from '../assets/artist-photo-2.jpg';
   }
 
   .about__statement {
-    font-size: 1rem;
-    line-height: 1.7;
-  }
-
-  .about__text p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     line-height: 1.7;
   }
 
@@ -189,19 +172,8 @@ import artistPhoto2 from '../assets/artist-photo-2.jpg';
 
     .about__photo-wrap {
       position: static;
-      width: 100%;
-      max-width: 360px;
+      max-width: 300px;
       margin-inline: auto;
     }
   }
 </style>
-
-<script>
-  document.addEventListener('astro:page-load', () => {
-    const card = document.querySelector('.flip-card');
-    if (!card) return;
-    card.addEventListener('click', () => {
-      card.classList.toggle('is-flipped');
-    });
-  });
-</script>
